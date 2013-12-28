@@ -77,12 +77,12 @@ class EE_AdvancedEmailNotifications {
 		add_action( 'action_hook_espresso_new_event_left_column_advanced_options_top', 	array( $this, 'add_meta_box' ) );
 
 		// DB logic
-		add_action( 'action_hook_espresso_update_event_success', 						array( $this, 'update_database' ) );
-		add_action( 'action_hook_espresso_insert_event_success', 						array( $this, 'update_database' ) );
+		add_action( 'action_hook_espresso_update_event_success', 			array( $this, 'update_database' ) );
+		add_action( 'action_hook_espresso_insert_event_success', 			array( $this, 'update_database' ) );
 
 		// Additional functions...
-		add_action( 'action_hook_espresso_update_event_success', 						array( $this, 'send_test_emails' ) );
-		add_action( 'ee_adv_email_notification', 										array( $this, 'daily_email_dispatch' ) );
+		add_action( 'action_hook_espresso_update_event_success', 			array( $this, 'send_test_emails' ) );
+		add_action( 'ee_adv_email_notification', 					array( $this, 'daily_email_dispatch' ) );
 	}
 
 	/**
@@ -263,11 +263,11 @@ class EE_AdvancedEmailNotifications {
 				$wpdb->update( 
 					$table, 
 					array( 
-						'is_active' => $req["ee-email-$i-active"],
-						'send_offset' => $req["ee-email-$i-send-offset"],
-						'pre_existing_email' => $req["ee-email-$i-pre-existing-email"],
-						'email_subject' => esc_html($req["ee-email-$i-subject"]),
-						'email_body' => esc_html($req["ee-email-$i-body"])
+						'is_active' 		=> $req["ee-email-$i-active"],
+						'send_offset' 		=> $req["ee-email-$i-send-offset"],
+						'pre_existing_email' 	=> $req["ee-email-$i-pre-existing-email"],
+						'email_subject' 	=> esc_html($req["ee-email-$i-subject"]),
+						'email_body' 		=> esc_html($req["ee-email-$i-body"])
 					), 
 					array( 
 						'event_id' => $event_id,
@@ -289,13 +289,13 @@ class EE_AdvancedEmailNotifications {
 				$wpdb->insert( 
 					$table, 
 					array( 
-						'event_id' => $event_id,
-						'email_id' => $i,
-						'is_active' => $req["ee-email-$i-active"],
-						'send_offset' => $req["ee-email-$i-send-offset"],
-						'pre_existing_email' => $req["ee-email-$i-pre-existing-email"],
-						'email_subject' => $req["ee-email-$i-subject"],
-						'email_body' => esc_html($req["ee-email-$i-body"])
+						'event_id' 		=> $event_id,
+						'email_id' 		=> $i,
+						'is_active' 		=> $req["ee-email-$i-active"],
+						'send_offset	 	=> $req["ee-email-$i-send-offset"],
+						'pre_existing_email' 	=> $req["ee-email-$i-pre-existing-email"],
+						'email_subject		=> $req["ee-email-$i-subject"],
+						'email_body		=> esc_html($req["ee-email-$i-body"])
 					), 
 					array( 
 						'%d',
@@ -320,14 +320,14 @@ class EE_AdvancedEmailNotifications {
 			if( $req["ee-test-send-to-$i"] != '' ){
 
 				$email = (object) array(
-						'email' 				=> $req["ee-test-send-to-$i"],
-						'id' 					=> $req["event_id"],
-						'name'					=> "**FULL NAME HERE**",
-						'attendee_id'			=> '1',
-						'start_date'			=> $req["start_date"],
+						'email' 		=> $req["ee-test-send-to-$i"],
+						'id' 			=> $req["event_id"],
+						'name'			=> "**FULL NAME HERE**",
+						'attendee_id'		=> '1',
+						'start_date'		=> $req["start_date"],
 						'pre_existing_email' 	=> $req["ee-email-$i-pre-existing-email"],
-						'email_subject' 		=> $req["ee-email-$i-subject"],
-						'email_body' 			=> esc_html($req["ee-email-$i-body"])
+						'email_subject' 	=> $req["ee-email-$i-subject"],
+						'email_body' 		=> esc_html($req["ee-email-$i-body"])
 					);
 
 				/*?> <pre> <h1> Email <?php echo $i; ?> </h1> <?php print_r($email); ?> </pre> <?php*/
